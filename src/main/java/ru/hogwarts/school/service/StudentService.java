@@ -8,6 +8,8 @@ public interface StudentService {
     Student getStudent(Long id);
     Student updateStudent(Long id, Student student);
     void removeStudent(Long id);
-    List<Student> getStudentsByAge(int age);
+    List<Student> getStudentsByAge(Integer age);
+    List<Student> getStudentsWithAgeBetween(Integer min, Integer max);
+    List<Student> getStudentsFromFaculty(Long facultyId);
 
 }

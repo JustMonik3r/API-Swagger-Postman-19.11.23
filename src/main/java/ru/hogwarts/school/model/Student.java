@@ -1,25 +1,38 @@
 package ru.hogwarts.school.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.Objects;
 
 @Entity
 public class Student {
     @Id
-    @GeneratedValue
+    @Column(name = "Student ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private int age;
+    @ManyToOne
+    @JdbcTypeCode(SqlTypes.JSON)
+    @JoinColumn(name = "Faculty", nullable = false)
+    private Long facultyID;
 
-    public Student(String name, int age) {
-        //this.id = id;
+    public long getFacultyID() {
+        return facultyID;
+    }
+
+    public void setFacultyID(long facultyID) {
+        this.facultyID = facultyID;
+    }
+
+    public Student(String name, int age, long facultyID) {
         this.name = name;
         this.age = age;
+        this.facultyID = facultyID;
     }
+
 
     public Long getId() {
         return id;
