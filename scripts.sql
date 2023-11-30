@@ -7,5 +7,5 @@ select student.name from student
 select * from student where name like '%о%'
 //4.Получить всех студентов, у которых возраст меньше идентификатора.
 select * from student where age < id
-//5.Получить всех студентов, у которых возраст меньше идентификатора.
+//5.Получить всех студентов упорядоченных по возрасту.
 select  * from student s order by s.age
