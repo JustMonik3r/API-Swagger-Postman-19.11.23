@@ -80,7 +80,7 @@ public class FacultyServiceImpl implements FacultyService{
     }
 
     @Override
-    public List<Student> getStudentsByFacultyID(Long id){
-        return studentService.getStudentsFromFaculty(id);
+    public List<Student> getStudentsByFaculty(Faculty faculty){
+        return studentService.findStudentsFromFaculty(faculty);
     };
 }

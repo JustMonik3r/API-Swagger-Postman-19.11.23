@@ -2,6 +2,7 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exceptions.StudentNotFoundException;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
@@ -18,7 +19,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public Student addStudent(Student student) {
-        Student newStudent = new Student(student.getName(), student.getAge(), student.getFacultyID());
+        Student newStudent = new Student(student.getName(), student.getAge());
         return studentRepository.save(newStudent);
     }
 
@@ -45,14 +46,14 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public List<Student> getStudentsByAge(Integer age) {
+    public List<Student> findStudentsByAge(Integer age) {
         return studentRepository.findAll()
                 .stream()
                 .filter(student -> student.getAge() == age)
                 .toList();
     }
     @Override
-    public List<Student> getStudentsWithAgeBetween(Integer min, Integer max) {
+    public List<Student> findStudentsWithAgeBetween(Integer min, Integer max) {
         return studentRepository.findAll()
                 .stream()
                 .filter(student -> student.getAge() >= min && student.getAge() <= max)
@@ -60,10 +61,10 @@ public class StudentServiceImpl implements StudentService{
     }
 
    @Override
-    public List<Student> getStudentsFromFaculty(Long facultyId) {
+    public List<Student> findStudentsFromFaculty(Faculty faculty) {
         return studentRepository.findAll()
                 .stream()
-                .filter(student -> student.getFacultyID() == facultyId)
+                .filter(student -> student.getFaculty() == faculty)
                 .toList();
     }
 

@@ -9,30 +9,35 @@ import java.util.Objects;
 @Entity
 public class Student {
     @Id
-    @Column(name = "Student ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private int age;
     @ManyToOne
+    private Faculty faculty;
+    /*@ManyToOne
     @JdbcTypeCode(SqlTypes.JSON)
     @JoinColumn(name = "Faculty", nullable = false)
-    private Long facultyID;
+    private Long facultyID;*/
 
-    public long getFacultyID() {
-        return facultyID;
+    public Faculty getFaculty() {
+        return faculty;
     }
 
-    public void setFacultyID(long facultyID) {
-        this.facultyID = facultyID;
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
-    public Student(String name, int age, long facultyID) {
+    public Student(String name, int age) {
+        this.id = id;
         this.name = name;
         this.age = age;
-        this.facultyID = facultyID;
+        this.faculty = faculty;
     }
 
+    public Student() {
+
+    }
 
     public Long getId() {
         return id;

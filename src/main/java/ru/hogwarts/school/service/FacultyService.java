@@ -18,5 +18,5 @@ public interface FacultyService {
 
     List<Faculty> findFacultyByName(String name);
 
-    List<Student> getStudentsByFacultyID(Long id);
+    List<Student> getStudentsByFaculty(Faculty faculty);
 }
