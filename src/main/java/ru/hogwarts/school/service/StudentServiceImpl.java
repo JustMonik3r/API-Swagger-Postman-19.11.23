@@ -18,13 +18,14 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student addStudent(Student student) {
-        Student newStudent = new Student(student.getName(), student.getAge());
-        return studentRepository.save(newStudent);
+    public Student addStudent(String name, Integer age) {
+        Student newStudent = new Student(name, age);
+        newStudent = studentRepository.save(newStudent);
+        return newStudent;
     }
 
     @Override
-    public Student getStudent(Long id) {
+    public Student getStudent(long id) {
         if (!studentRepository.existsById(id)) {
             throw new StudentNotFoundException(String.format("Student [%s] not found", id));
         }
@@ -32,17 +33,18 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student updateStudent(Long id, Student student) {
-        Student existingStudent = studentRepository.findById(id).get();
-        existingStudent.setName(student.getName());
-        existingStudent.setAge(student.getAge());
-        return existingStudent;
+    public Student updateStudent(long id, String name, Integer age) {
+        Student existingStudent = getStudent(id);
+        existingStudent.setName(name);
+        existingStudent.setAge(age);
+        return studentRepository.save(existingStudent);
     }
 
     @Override
-    public void removeStudent(Long id) {
+    public Student removeStudent(long id) {
+        Student existingStudent = getStudent(id);
         studentRepository.deleteById(id);
-        System.out.println(String.format("Student %s has been removed", id));
+        return existingStudent;
     }
 
     @Override

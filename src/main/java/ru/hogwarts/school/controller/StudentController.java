@@ -17,23 +17,23 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/{id}")
-    public Student getStudent(@PathVariable Long id){
+    @GetMapping
+    public Student getStudent(@RequestParam long id){
         return studentService.getStudent(id);
     }
 
     @PostMapping
     public Student addStudent(@RequestBody Student student) {
-        return studentService.addStudent(student);
+        return studentService.addStudent(student.getName(), student.getAge());
     }
 
-    @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
-        return studentService.updateStudent(id, student);
+    @PutMapping
+    public Student updateStudent(@RequestBody Student student) {
+        return studentService.updateStudent(student.getId(), student.getName(), student.getAge());
     }
 
-    @DeleteMapping("/{id}")
-    public void removeStudent(Long id) {
+    @DeleteMapping
+    public void removeStudent(@RequestParam long id) {
         studentService.removeStudent(id);
     }
 

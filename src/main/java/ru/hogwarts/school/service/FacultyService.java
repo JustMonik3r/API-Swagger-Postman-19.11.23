@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 public interface FacultyService {
-    Faculty addFaculty(Faculty faculty);
+    Faculty addFaculty(String name, String color);
     Faculty getFaculty(Long id);
-    Faculty updateFaculty(Long id, Faculty faculty);
+    Faculty updateFaculty (long id, String name, String color);
     void removeFaculty(Long id);
     List<Faculty> getFacultiesByColor(String color);
     Set<Faculty> findFacultyByColorOrName(String param);

@@ -5,7 +5,6 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -19,22 +18,22 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @GetMapping("/{id}")
-    public Faculty getFaculty(@PathVariable Long id){
+    @GetMapping
+    public Faculty getFaculty(@RequestParam long id){
         return facultyService.getFaculty(id);
     }
 
     @PostMapping
     public Faculty addFaculty(@RequestBody Faculty faculty) {
-        return facultyService.addFaculty(faculty);
+        return facultyService.addFaculty(faculty.getName(), faculty.getColor());
     }
 
-    @PutMapping("/{id}")
-    public Faculty updateFaculty(@PathVariable Long id, @RequestBody Faculty faculty) {
-        return facultyService.updateFaculty(id, faculty);
+    @PutMapping
+    public Faculty updateFaculty(@RequestBody Faculty faculty) {
+        return facultyService.updateFaculty(faculty.getId(), faculty.getName(), faculty.getColor());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     public void removeFaculty(Long id) {
         facultyService.removeFaculty(id);
     }
