@@ -70,4 +70,20 @@ public class StudentServiceImpl implements StudentService{
                 .toList();
     }
 
+    @Override
+    public Integer getCount() {
+        return studentRepository.getCount();
+    }
+
+    @Override
+    public Double getAvgAge() {
+        return studentRepository.getAvgAge();
+    }
+
+    @Override
+    public List<Student> getLastFiveAddedStudents() {
+        return studentRepository.getLastFiveAddedStudents();
+    }
+
+
 }

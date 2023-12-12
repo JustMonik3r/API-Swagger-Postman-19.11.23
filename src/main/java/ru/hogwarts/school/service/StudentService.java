@@ -12,5 +12,8 @@ public interface StudentService {
     List<Student> findStudentsByAge(Integer age);
     List<Student> findStudentsWithAgeBetween(Integer min, Integer max);
     List<Student> findStudentsFromFaculty(Faculty faculty);
+    Integer getCount();
+    Double getAvgAge();
+    List<Student> getLastFiveAddedStudents();
 
 }
