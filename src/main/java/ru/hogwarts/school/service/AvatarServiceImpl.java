@@ -1,6 +1,9 @@
 package ru.hogwarts.school.service;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +25,10 @@ import java.nio.file.Path;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
+@Transactional
 public class AvatarServiceImpl implements AvatarService{
+
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
     private final AvatarRepository avatarRepository;
     private final StudentRepository studentRepository;
     private final String avatarsDir;
@@ -39,6 +45,7 @@ public class AvatarServiceImpl implements AvatarService{
 
     @Override
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Был вызван метод uploadAvatar");
         Student student = studentRepository.findById(studentId).get();
         Path filePath = Path.of(avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -67,6 +74,7 @@ public class AvatarServiceImpl implements AvatarService{
 
     @Override
     public void downloadAvatar(Long id, HttpServletResponse response) throws IOException {
+        logger.info("Был вызван метод downloadAvatar");
         Avatar avatar = avatarRepository.findById(id).get();
         Path path = Path.of(avatar.getFilePath());
         try (InputStream is = Files.newInputStream(path);
@@ -80,6 +88,7 @@ public class AvatarServiceImpl implements AvatarService{
 
     @Override
     public ResponseEntity<byte[]> downloadFromDb(Long id) {
+        logger.info("Был вызван метод downloadFromDb");
         Avatar avatar = avatarRepository.findById(id).get();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
@@ -89,6 +98,7 @@ public class AvatarServiceImpl implements AvatarService{
 
     @Override
     public Page<Avatar> getWithPageable(int page, int count) {
+        logger.info("Был вызван метод getWithPageable");
         return avatarRepository.findAll(PageRequest.of(page, count));
     }
 }

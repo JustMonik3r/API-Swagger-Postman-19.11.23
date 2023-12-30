@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exceptions.FacultyNotFoundException;
 import ru.hogwarts.school.model.Faculty;
@@ -16,6 +18,8 @@ public class FacultyServiceImpl implements FacultyService{
     private final FacultyRepository facultyRepository;
     private final StudentService studentService;
 
+    private final Logger logger = LoggerFactory.getLogger(FacultyService.class);
+
     public FacultyServiceImpl(FacultyRepository facultyRepository, StudentService studentService) {
         this.facultyRepository = facultyRepository;
         this.studentService = studentService;
@@ -23,12 +27,14 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public Faculty addFaculty(String name, String color) {
+        logger.info("Был вызван метод addFaculty");
         Faculty newFaculty = new Faculty(name, color);
         return facultyRepository.save(newFaculty);
     }
 
     @Override
     public Faculty getFaculty(Long id) {
+        logger.info("Был вызван метод getFaculty");
         if (!facultyRepository.existsById(id)) {
             throw new FacultyNotFoundException(String.format("Faculty [%s] not found", id));
         }
@@ -37,6 +43,7 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public Faculty updateFaculty(long id, String name, String color) {
+        logger.info("Был вызван метод updateFaculty");
         Faculty existingFaculty = facultyRepository.findById(id).get();
         existingFaculty.setName(name);
         existingFaculty.setColor(color);
@@ -45,12 +52,14 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public void removeFaculty(Long id) {
+        logger.info("Был вызван метод removeFaculty");
         facultyRepository.deleteById(id);
         System.out.println(String.format("Faculty %s has been removed", id));
     }
 
     @Override
     public List<Faculty> getFacultiesByColor(String color) {
+        logger.info("Был вызван метод getFacultiesByColor");
         return facultyRepository.findAll()
                 .stream()
                 .filter(faculty -> faculty.getColor() == color)
@@ -58,6 +67,7 @@ public class FacultyServiceImpl implements FacultyService{
     }
     @Override
     public Set<Faculty> findFacultyByColorOrName(String param) {
+        logger.info("Был вызван метод findFacultyByColorOrName");
         Set<Faculty> result = new HashSet<>();
         result.addAll(facultyRepository.findFacultyByColor(param));
         result.addAll(facultyRepository.findFacultyByName(param));
@@ -66,6 +76,7 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public List<Faculty> findFacultyByName(String name) {
+        logger.info("Был вызван метод findFacultyByName");
         return facultyRepository.findAll()
                 .stream()
                 .filter(faculty -> faculty.getName() == name)
@@ -73,6 +84,7 @@ public class FacultyServiceImpl implements FacultyService{
     }
     @Override
     public List<Faculty> findFacultyByColor(String color) {
+        logger.info("Был вызван метод findFacultyByColor");
         return facultyRepository.findAll()
                 .stream()
                 .filter(faculty -> faculty.getName() == color)
@@ -81,6 +93,7 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public List<Student> getStudentsByFaculty(Faculty faculty){
+        logger.info("Был вызван метод getStudentsByFaculty");
         return studentService.findStudentsFromFaculty(faculty);
     };
 }
