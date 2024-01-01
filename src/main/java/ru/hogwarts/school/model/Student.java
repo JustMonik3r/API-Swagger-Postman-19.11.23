@@ -1,16 +1,42 @@
 package ru.hogwarts.school.model;
 
+import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.util.Objects;
 
+@Entity
 public class Student {
-    Long id;
-    String name;
-    int age;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private int age;
+    @ManyToOne
+    private Faculty faculty;
+    /*@ManyToOne
+    @JdbcTypeCode(SqlTypes.JSON)
+    @JoinColumn(name = "Faculty", nullable = false)
+    private Long facultyID;*/
 
-    public Student(Long id, String name, int age) {
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    public Student(String name, int age) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.faculty = faculty;
+    }
+
+    public Student() {
+
     }
 
     public Long getId() {
@@ -53,8 +79,7 @@ public class Student {
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", age=" + age +
                 '}';
     }
