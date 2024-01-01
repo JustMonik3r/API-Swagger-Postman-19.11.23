@@ -9,6 +9,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositories.StudentRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -72,7 +73,7 @@ public class StudentServiceImpl implements StudentService{
                 .toList();
     }
 
-   @Override
+    @Override
     public List<Student> findStudentsFromFaculty(Faculty faculty) {
        logger.info("Был вызван метод findStudentsFromFaculty");
         return studentRepository.findAll()
@@ -99,5 +100,21 @@ public class StudentServiceImpl implements StudentService{
         return studentRepository.getLastFiveAddedStudents();
     }
 
+    @Override
+    public List<String> getStudentsWithNamesStartingWithA() {
+        String startSymbol = "A";
+        return studentRepository.findAll().stream()
+                .map(student -> student.getName().toUpperCase())
+                .filter(name -> name.startsWith(startSymbol.toUpperCase()))
+                .sorted()
+                .collect(Collectors.toList());
+    }
 
+    @Override
+    public double getAvgAgeWithStream() {
+        return studentRepository.findAll().stream()
+                .mapToDouble(student -> (double) student.getAge())
+                .average()
+                .orElse(0);
+    }
 }

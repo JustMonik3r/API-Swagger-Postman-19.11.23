@@ -19,4 +19,6 @@ public interface FacultyService {
     List<Faculty> findFacultyByName(String name);
 
     List<Student> getStudentsByFaculty(Faculty faculty);
+
+    String getFacultyWithLongestName();
 }

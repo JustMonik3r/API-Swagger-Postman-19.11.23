@@ -92,8 +92,17 @@ public class FacultyServiceImpl implements FacultyService{
     }
 
     @Override
-    public List<Student> getStudentsByFaculty(Faculty faculty){
+    public List<Student> getStudentsByFaculty(Faculty faculty) {
         logger.info("Был вызван метод getStudentsByFaculty");
         return studentService.findStudentsFromFaculty(faculty);
-    };
+    }
+
+    @Override
+    public String getFacultyWithLongestName() {
+        logger.info("Был вызван метод getFacultyWithLongestName");
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max((name1, name2) -> name1.length() - name2.length())
+                .get();
+    }
 }

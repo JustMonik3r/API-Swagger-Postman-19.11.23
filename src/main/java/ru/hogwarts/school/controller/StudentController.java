@@ -51,4 +51,14 @@ public class StudentController {
     public List<Student> getStudentsFromFaculty(@RequestParam Faculty faculty) {
         return studentService.findStudentsFromFaculty(faculty);
     }
+
+    @GetMapping("/name/starts-with-a")
+    public List<String> getStudentsWithNamesStartingWithA() {
+        return studentService.getStudentsWithNamesStartingWithA();
+    }
+
+    @GetMapping("/avg-age-with-stream")
+    public double getAvgAgeWithStream() {
+        return studentService.getAvgAgeWithStream();
+    }
 }
