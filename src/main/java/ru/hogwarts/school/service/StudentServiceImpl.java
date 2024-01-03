@@ -120,7 +120,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public void printStudents() {
-        List<Student> students = studentRepository.findAll();
+        LinkedList<Student> students = (LinkedList<Student>) studentRepository.findAll();
 
         printStudent(students.get(0));
         printStudent(students.get(1));
@@ -140,7 +140,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public void printStudentsSync() {
-        List<Student> students = studentRepository.findAll();
+        LinkedList<Student> students = (LinkedList<Student>) studentRepository.findAll();
 
         printStudentSync(students.get(0));
         printStudentSync(students.get(1));
