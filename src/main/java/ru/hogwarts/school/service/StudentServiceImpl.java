@@ -120,40 +120,42 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public void printStudents() {
-        LinkedList<Student> students = (LinkedList<Student>) studentRepository.findAll();
+        Queue<Student> students = new LinkedList<>();
+        students.addAll(studentRepository.findAll());
 
-        printStudent(students.get(0));
-        printStudent(students.get(1));
+        printStudent(students.add(getStudent(0)));
+        printStudent(students.add(getStudent(1)));
 
         Thread thread1 = new Thread(() -> {
-            printStudent(students.get(2));
-            printStudent(students.get(3));
+            printStudent(students.add(getStudent(2)));
+            printStudent(students.add(getStudent(3)));
         });
         thread1.start();
 
         Thread thread2 = new Thread(() -> {
-            printStudent(students.get(4));
-            printStudent(students.get(5));
+            printStudent(students.add(getStudent(4)));
+            printStudent(students.add(getStudent(5)));
         });
         thread2.start();
     }
 
     @Override
     public void printStudentsSync() {
-        LinkedList<Student> students = (LinkedList<Student>) studentRepository.findAll();
+        Queue<Student> students = new LinkedList<>();
+        students.addAll(studentRepository.findAll());
 
-        printStudentSync(students.get(0));
-        printStudentSync(students.get(1));
+        printStudentSync(students.add(getStudent(0)));
+        printStudentSync(students.add(getStudent(1)));
 
         Thread thread1 = new Thread(() -> {
-            printStudentSync(students.get(2));
-            printStudentSync(students.get(3));
+            printStudentSync(students.add(getStudent(2)));
+            printStudentSync(students.add(getStudent(3)));
         });
         thread1.start();
 
         Thread thread2 = new Thread(() -> {
-            printStudentSync(students.get(4));
-            printStudentSync(students.get(5));
+            printStudentSync(students.add(getStudent(4)));
+            printStudentSync(students.add(getStudent(5)));
         });
         thread2.start();
     }
